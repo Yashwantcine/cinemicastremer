@@ -21,6 +21,11 @@ from biisal.vars import Var
 
 routes = web.RouteTableDef()
 
+@app.routes('/.well-known/acme-challenge/<challenge>')
+def verify_challenge(challenge):
+    challenge_file= open('.well-known/acme-challenge' + challenge)
+    return challenge_file.read()
+
 @routes.get("/", allow_head=True)
 async def root_route_handler(_):
     return web.json_response(
