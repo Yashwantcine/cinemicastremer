@@ -1,5 +1,3 @@
-# © agrprojects
-
 import ssl
 from aiohttp import web
 from .stream_routes import routes
@@ -19,7 +17,7 @@ async def web_server():
     # Load CA Bundle
     ssl_context.load_verify_locations(cafile='biisal/server/ssl_cert/ca_bundle.crt')
 
-    # Start the web server with SSL
+    # Return the application and SSL context
     return web_app, ssl_context
 
 if __name__ == "__main__":
