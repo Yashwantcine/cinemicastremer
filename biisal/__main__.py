@@ -16,11 +16,11 @@ from .utils.keepalive import ping_server
 from biisal.bot.clients import initialize_clients
 
 LOGO = """
- ____ ___ ___ ____    _    _     
-| __ )_ _|_ _/ ___|  / \  | |    
-|  _ \| | | |\___ \ / _ \ | |    
-| |_) | | | | ___) / ___ \| |___ 
-|____/___|___|____/_/   \_\_____|"""
+____ _ _  _ ____ _  _ _ ____ ____ 
+|    | |\ | |___ |\/| | |    |__| 
+|___ | | \| |___ |  | | |___ |  | 
+                                  
+"""
 
 logging.basicConfig(
     level=logging.INFO,
@@ -86,7 +86,7 @@ async def start_services():
     print('---------------------------------------------------------------------------------------------------------')
     print(LOGO)
     try: 
-        await StreamBot.send_message(chat_id=Var.OWNER_ID[0] ,text='<b>ᴊᴀɪ sʜʀᴇᴇ ᴋʀɪsʜɴᴀ 😎\nʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ !!</b>')
+        await StreamBot.send_message(chat_id=Var.OWNER_ID[0] ,text='<b>BOT RESTARTED 🤖</b>')
     except Exception as e:
         print(f'got this err to send restart msg to owner : {e}')
     await idle()
