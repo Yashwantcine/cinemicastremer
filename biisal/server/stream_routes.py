@@ -1,3 +1,7 @@
+# Taken from megadlbot_oss <https://github.com/eyaadh/megadlbot_oss/blob/master/mega/webserver/routes.py>
+# Thanks to Eyaadh <https://github.com/eyaadh>
+# Thanks to adarsh-goel
+# (c) @biisal
 import re
 import time
 import math
@@ -13,6 +17,7 @@ from ..utils.time_format import get_readable_time
 from ..utils.custom_dl import ByteStreamer
 from biisal.utils.render_template import render_page
 from biisal.vars import Var
+
 
 routes = web.RouteTableDef()
 
@@ -33,6 +38,7 @@ async def root_route_handler(_):
             "version": __version__,
         }
     )
+
 
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
 async def stream_handler(request: web.Request):
@@ -96,7 +102,6 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
         logging.debug(f"Creating new ByteStreamer object for client {index}")
         tg_connect = ByteStreamer(faster_client)
         class_cache[faster_client] = tg_connect
-    
     logging.debug("before calling get_file_properties")
     file_id = await tg_connect.get_file_properties(id)
     logging.debug("after calling get_file_properties")
@@ -147,7 +152,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
                 file_name = f"{secrets.token_hex(2)}.unknown"
     else:
         if file_name:
-            mime_type = mimetypes.guess_type(file_id.file_name)[0]
+            mime_type = mimetypes.guess_type(file_id.file_name)
         else:
             mime_type = "application/octet-stream"
             file_name = f"{secrets.token_hex(2)}.unknown"
@@ -156,7 +161,7 @@ async def media_streamer(request: web.Request, id: int, secure_hash: str):
         status=206 if range_header else 200,
         body=body,
         headers={
-            "Content-Type": mime_type,
+            "Content-Type": f"{mime_type}",
             "Content-Range": f"bytes {from_bytes}-{until_bytes}/{file_size}",
             "Content-Length": str(req_length),
             "Content-Disposition": f'{disposition}; filename="{file_name}"',
